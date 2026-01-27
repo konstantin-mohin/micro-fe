@@ -20,7 +20,7 @@
 
 - [ ] **Task: Conductor - User Manual Verification 'Project Setup and Basic Layout Integration' (Protocol in workflow.md)**
 
-## Phase 2: API for Document Title Management
+## Phase 2: API for Document Title Management [checkpoint: 7291f96]
 
 - [ ] **Task: Design and implement the `setTitle` API**
     - [ ] Write tests for `setTitle` function.

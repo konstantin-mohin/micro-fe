@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "webpack-dev-server",
+    "build": "webpack",
     "test": "jest"
   },
   "dependencies": {

@@ -36,6 +36,9 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'layout',
       filename: 'remoteEntry.js',
+      exposes: {
+        './setTitle': './src/setTitle.ts',
+      },
       shared: {
         react: { singleton: true, eager: true, requiredVersion: '^19.2.0' },
         'react-dom': {

@@ -9,7 +9,7 @@
     "dev:client": "pnpm --filter client dev",
     "dev:server": "pnpm --filter server dev",
     "dev:microfrontend-one": "pnpm --filter microfrontend-one dev",
-    "dev:all": "concurrently \"pnpm --filter client dev\" \"pnpm --filter microfrontend-one dev\""
+    "dev:all": "concurrently \"pnpm --filter client dev\" \"pnpm --filter microfrontend-one dev\" \"pnpm --filter layout dev\""
   },
   "keywords": [],
   "author": "",

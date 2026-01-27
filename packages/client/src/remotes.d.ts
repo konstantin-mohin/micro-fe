@@ -1,1 +1,1 @@
-declare module 'microfrontend-one/Button';
+declare module 'microfrontend_one/Button';

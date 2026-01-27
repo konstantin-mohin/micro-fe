@@ -38,7 +38,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'host_app',
       remotes: {
-        'microfrontend-one': 'microfrontend_one@http://localhost:5174/remoteEntry.js',
+        'microfrontend_one': `microfrontend_one@${process.env.MICROFRONTEND_ONE_URL || 'http://localhost:5174/remoteEntry.js'}`,
       },
       shared: {
         react: { singleton: true, eager: true, requiredVersion: '^19.2.0' },

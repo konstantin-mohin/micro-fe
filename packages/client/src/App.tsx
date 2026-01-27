@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import axios from 'axios';
 
-const RemoteButton = lazy(() => import('microfrontend-one/Button'));
+const RemoteButton = lazy(() => import('microfrontend_one/Button'));
 
 function App() {
   const [message, setMessage] = useState('');

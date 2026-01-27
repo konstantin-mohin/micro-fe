@@ -1,6 +1,6 @@
 # Implementation Plan: Create Layout Micro-frontend
 
-## Phase 1: Project Setup and Basic Layout Integration
+## Phase 1: Project Setup and Basic Layout Integration [checkpoint: f2bd513]
 
 - [ ] **Task: Create new micro-frontend project "layout"**
     - [ ] Create a new directory `packages/layout`.

@@ -39,6 +39,7 @@ module.exports = {
       name: 'host_app',
       remotes: {
         'microfrontend_one': `microfrontend_one@${process.env.MICROFRONTEND_ONE_URL || 'http://localhost:5174/remoteEntry.js'}`,
+        'layout': `layout@http://localhost:5175/remoteEntry.js`,
       },
       shared: {
         react: { singleton: true, eager: true, requiredVersion: '^19.2.0' },

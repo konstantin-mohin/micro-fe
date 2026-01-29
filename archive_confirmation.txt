@@ -1,0 +1,1 @@
+Track 'Create a new micro-frontend project called 'layout'. It will have a footer, header, and sidebar, and other projects will be inside of this project. This project should expose an API with a method that sets document.title.' has been successfully archived.

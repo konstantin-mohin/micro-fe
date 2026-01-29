@@ -1,0 +1,5 @@
+
+
+> server@1.0.0 build /Users/cosmos/Projects/js_practice/packages/server
+> rimraf dist && tsc
+

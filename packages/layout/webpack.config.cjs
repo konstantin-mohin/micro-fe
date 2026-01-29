@@ -38,6 +38,10 @@ module.exports = {
       filename: 'remoteEntry.js',
       exposes: {
         './setTitle': './src/setTitle.ts',
+        './Layout': './src/Layout.tsx',
+        './Header': './src/Header.tsx',
+        './Footer': './src/Footer.tsx',
+        './Sidebar': './src/Sidebar.tsx'
       },
       shared: {
         react: { singleton: true, eager: true, requiredVersion: '^19.2.0' },

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button } from 'ui';
 
 const RemoteButton = lazy(() => import('microfrontend_one/Button'));
+const Layout = lazy(() => import('layout/Layout'));
 
 function App() {
   const [message, setMessage] = useState('');
@@ -18,15 +19,19 @@ function App() {
   }, []);
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>{message} okay </h1>
-      <Suspense fallback={<div>Loading...</div>}>
-        <RemoteButton />
-      </Suspense>
-      <div style={{ marginTop: '20px' }}>
-        <Button />
-      </div>
-    </div>
+    <Suspense fallback={<div>Loading Layout...</div>}>
+      <Layout>
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+          <h1>{message} okay </h1>
+          <Suspense fallback={<div>Loading Button...</div>}>
+            <RemoteButton />
+          </Suspense>
+          <div style={{ marginTop: '20px' }}>
+            <Button />
+          </div>
+        </div>
+      </Layout>
+    </Suspense>
   );
 }
 

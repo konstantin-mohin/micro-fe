@@ -16,13 +16,13 @@
 ## Phase 2: Docker Preparation
 *Goal: Ensure every application has a working Dockerfile that respects the pnpm monorepo structure.*
 
-- [ ] Create .dockerignore (Root): Exclude node_modules, .git, and local env files to keep images small.
-- [ ] Create Dockerfiles: Add a Dockerfile to each of the 4 apps:
+- [x] Create .dockerignore (Root): Exclude node_modules, .git, and local env files to keep images small.
+- [x] Create Dockerfiles: Add a Dockerfile to each of the 4 apps:
     - packages/server/Dockerfile
     - packages/client/Dockerfile
     - packages/microfrontend-one/Dockerfile
     - packages/layout/Dockerfile
-- [ ] Implement "Turbo Prune" (Advanced Requirement):
+- [x] Implement "Turbo Prune" (Advanced Requirement):
     - Note: Standard Dockerfiles often fail in monorepos because they can't access shared packages/.
     - Requirement: Use turbo prune --scope=<app-name> --docker inside the Docker build process (or before it) to isolate only the necessary files for that specific app before building the image.
 

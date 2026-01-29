@@ -1,5 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import axios from 'axios';
+import { Button } from 'ui';
 
 const RemoteButton = lazy(() => import('microfrontend_one/Button'));
 
@@ -22,6 +23,9 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <RemoteButton />
       </Suspense>
+      <div style={{ marginTop: '20px' }}>
+        <Button />
+      </div>
     </div>
   );
 }

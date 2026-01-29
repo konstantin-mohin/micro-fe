@@ -29,10 +29,10 @@
 ## Phase 3: CI/CD Pipeline Strategy (GitHub Actions)
 *Goal: Create a workflow that detects changes and builds Docker images in parallel.*
 
-- [ ] Set up Container Registry:
+- [x] Set up Container Registry:
     - Decision: Use GitHub Container Registry (GHCR). It is built into your GitHub account, private, and free for personal use.
-- [ ] Create Workflow File: .github/workflows/ci-cd.yml
-- [ ] Define Jobs:
+- [x] Create Workflow File: .github/workflows/ci-cd.yml
+- [x] Define Jobs:
     - Job 1: CI (Quality Check):
         - Run Lint & Test using Turbo: turbo run test lint.
         - (Turbo will automatically skip apps that didn't change).

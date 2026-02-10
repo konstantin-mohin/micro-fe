@@ -1,10 +1,12 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import axios from 'axios';
 import { Button } from 'ui';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 const RemoteButton = lazy(() => import('microfrontend_one/Button'));
+const Profile = lazy(() => import('microfrontend_one/Profile'));
 
-function App() {
+function Home() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -26,7 +28,24 @@ function App() {
       <div style={{ marginTop: '20px' }}>
         <Button />
       </div>
+      <div style={{ marginTop: '20px' }}>
+        <Link to="/profile">Go to Profile</Link>
+      </div>
     </div>
+  );
+}
+
+
+function App() {
+  return (
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </Suspense>
+    </Router>
   );
 }
 

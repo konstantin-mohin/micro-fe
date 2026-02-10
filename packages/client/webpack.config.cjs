@@ -8,6 +8,7 @@ module.exports = {
   devServer: {
     static: path.join(__dirname, 'dist'),
     port: 3000,
+    historyApiFallback: true,
     proxy: {
       '/api': {
         target: 'http://localhost:3001',
@@ -46,6 +47,11 @@ module.exports = {
           singleton: true,
           eager: true,
           requiredVersion: '^19.2.0',
+        },
+        'react-router-dom': {
+          singleton: true,
+          eager: true,
+          requiredVersion: '^7.13.0',
         },
       },
     }),

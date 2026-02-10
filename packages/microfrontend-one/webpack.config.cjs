@@ -38,6 +38,7 @@ module.exports = {
       filename: 'remoteEntry.js',
       exposes: {
         './Button': './src/Button.tsx',
+        './Profile': './src/Profile.tsx',
       },
       shared: {
         react: { singleton: true, eager: true, requiredVersion: '^19.2.0' },
@@ -45,6 +46,11 @@ module.exports = {
           singleton: true,
           eager: true,
           requiredVersion: '^19.2.0',
+        },
+        'react-router-dom': {
+          singleton: true,
+          eager: true,
+          requiredVersion: '^7.13.0',
         },
       },
     }),

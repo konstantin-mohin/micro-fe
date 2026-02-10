@@ -1,11 +1,15 @@
 import React from 'react';
-import Button from './Button';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Profile from './Profile';
+import Home from './Home';
 
 const App = () => (
-  <div>
-    <h1>Microfrontend One</h1>
-    <Button />
-  </div>
+  <Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/profile" element={<Profile />} />
+    </Routes>
+  </Router>
 );
 
 export default App;

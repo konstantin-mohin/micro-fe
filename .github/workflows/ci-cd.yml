@@ -69,7 +69,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [server, client, microfrontend-one, layout]
+        app: [server, client, microfrontend-one, ui]
 
     steps:
       - name: Checkout code

@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* Explicitly include UI package components so Tailwind v4 can scan them */
+@source "../../ui/src/**/*.{js,ts,jsx,tsx}";
+@source "./**/*.{js,ts,jsx,tsx}";
+@source "../index.html";

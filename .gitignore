@@ -24,3 +24,5 @@ pnpm-debug.log*
 # Misc
 .DS_Store
 firebase-debug.log
+*storybook.log
+storybook-static

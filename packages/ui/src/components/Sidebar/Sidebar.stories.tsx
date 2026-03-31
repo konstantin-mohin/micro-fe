@@ -19,7 +19,8 @@ export const Default: Story = {
       { id: '1', label: 'Home', href: '/' },
       { id: '2', label: 'Profile', href: '/profile' },
       { id: '3', label: 'React Query', href: '/react-query' },
-      { id: '4', label: 'Settings', href: '/settings' },
+      { id: '4', label: 'Server Components', href: '/rsc' },
+      { id: '5', label: 'Settings', href: '/settings' },
     ],
   },
 };

@@ -10,15 +10,24 @@ app.get('/api/hello', (_req: Request, res: Response) => {
   res.json({ message: 'Hello from the server!' });
 });
 
-app.get('/api/data', async (_req: Request, res: Response) => {
-  // 1s delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
+import { Notes } from './components/Notes';
+
+app.get('/api/notes', async (_req: Request, res: Response) => {
+  try {
+    // Calling the Server Component directly on the server
+    const serverComponentPayload = await Notes();
+    res.json(serverComponentPayload);
+  } catch (error) {
+    res.status(500).json({ error: 'RSC Render Error' });
+  }
+});
+
+app.get('/api/data', (_req: Request, res: Response) => {
   res.json({
     items: [
-      { id: 1, name: 'Example Item 1', description: 'This is the first example item.' },
-      { id: 2, name: 'Example Item 2', description: 'This is the second example item.' },
-      { id: 3, name: 'Example Item 3', description: 'This is the third example item.' },
-    ]
+      { id: 1, name: 'Item 1', description: 'This is item 1' },
+      { id: 2, name: 'Item 2', description: 'This is item 2' },
+    ],
   });
 });
 

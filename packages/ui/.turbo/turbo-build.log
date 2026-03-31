@@ -6,14 +6,14 @@
 asset [1m[32mmain.js[39m[22m 684 KiB [1m[33m[compared for emit][39m[22m (name: main)
 asset [1m[32mvendors-node_modules_pnpm_css-loader_6_11_0_webpack_5_104_1_node_modules_css-loader_dist_cjs_-6d436b.js[39m[22m 565 KiB [1m[33m[compared for emit][39m[22m (id hint: vendors)
 asset [1m[32mremoteEntry.js[39m[22m 97.3 KiB [1m[33m[compared for emit][39m[22m (name: ui)
-asset [1m[32msrc_index_ts-webpack_sharing_consume_default_react-dom_react-dom.js[39m[22m 34.3 KiB [1m[33m[compared for emit][39m[22m
+asset [1m[32msrc_index_ts-webpack_sharing_consume_default_react-dom_react-dom.js[39m[22m 34.4 KiB [1m[33m[compared for emit][39m[22m
 asset [1m[32mindex.html[39m[22m 449 bytes [1m[33m[compared for emit][39m[22m
 orphan modules 3 MiB [1m[33m[orphan][39m[22m 1149 modules
 runtime modules 29.1 KiB 22 modules
 built modules 508 KiB (javascript) 84 bytes (share-init) 84 bytes (consume-shared) [1m[33m[built][39m[22m
   modules by path [1m../../node_modules/.pnpm/[39m[22m 498 KiB 87 modules
-  modules by path [1m./src/[39m[22m 9.92 KiB
-    modules by path [1m./src/components/[39m[22m 6.83 KiB 10 modules
+  modules by path [1m./src/[39m[22m 9.99 KiB
+    modules by path [1m./src/components/[39m[22m 6.91 KiB 10 modules
     modules by path [1m./src/*.css[39m[22m 2.63 KiB 2 modules
     + 2 modules
   provide-module modules 84 bytes
@@ -23,4 +23,4 @@ built modules 508 KiB (javascript) 84 bytes (share-init) 84 bytes (consume-share
     [1mconsume shared module (default) react@^19.2.0 (singleton) (fallback: ../../node_...(truncated)[39m[22m 42 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
     [1mconsume shared module (default) react-dom@^19.2.0 (singleton) (fallback: ../../n...(truncated)[39m[22m 42 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
   [1mcontainer entry[39m[22m 42 bytes [1m[33m[built][39m[22m [1m[33m[code generated][39m[22m
-webpack 5.104.1 compiled [1m[32msuccessfully[39m[22m in 773 ms
+webpack 5.104.1 compiled [1m[32msuccessfully[39m[22m in 825 ms

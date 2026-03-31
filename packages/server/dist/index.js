@@ -11,16 +11,16 @@ const port = process.env.PORT || 3000;
 app.get('/api/hello', (_req, res) => {
     res.json({ message: 'Hello from the server!' });
 });
-app.get('/api/data', async (_req, res) => {
-    // 1s delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    res.json({
-        items: [
-            { id: 1, name: 'Example Item 1', description: 'This is the first example item.' },
-            { id: 2, name: 'Example Item 2', description: 'This is the second example item.' },
-            { id: 3, name: 'Example Item 3', description: 'This is the third example item.' },
-        ]
-    });
+const Notes_1 = require("./components/Notes");
+app.get('/api/notes', async (_req, res) => {
+    try {
+        // Calling the Server Component directly on the server
+        const serverComponentPayload = await (0, Notes_1.Notes)();
+        res.json(serverComponentPayload);
+    }
+    catch (error) {
+        res.status(500).json({ error: 'RSC Render Error' });
+    }
 });
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);

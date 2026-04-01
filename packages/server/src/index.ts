@@ -17,7 +17,7 @@ app.get('/api/notes', async (_req: Request, res: Response) => {
     // Calling the Server Component directly on the server
     const serverComponentPayload = await Notes();
     res.json(serverComponentPayload);
-  } catch (error) {
+  } catch {
     res.status(500).json({ error: 'RSC Render Error' });
   }
 });

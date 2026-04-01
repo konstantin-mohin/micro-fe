@@ -22,7 +22,7 @@ export function Sidebar({
   className
 }: SidebarProps) {
   return (
-    <aside className={`w-64 bg-gray-50 h-screen p-4 border-r border-gray-200 ${className || ''}`}>
+    <aside className={`w-64 bg-gray-50 dark:bg-gray-800 h-screen p-4 border-r border-gray-200 dark:border-gray-700 ${className || ''}`}>
       <nav>
         <ul className="space-y-2">
           {items.map((item) => (
@@ -31,10 +31,10 @@ export function Sidebar({
                 href={item.href}
                 className={({ isPressed, isFocused, isHovered }) => `
                   block px-4 py-2 rounded transition-colors
-                  ${isHovered ? 'bg-gray-200' : ''}
-                  ${isPressed ? 'bg-gray-300' : ''}
+                  ${isHovered ? 'bg-gray-200 dark:bg-gray-700' : ''}
+                  ${isPressed ? 'bg-gray-300 dark:bg-gray-600' : ''}
                   ${isFocused ? 'outline outline-2 outline-blue-300' : ''}
-                  text-gray-700
+                  text-gray-700 dark:text-gray-200
                 `}
               >
                 {item.label}

@@ -5,13 +5,16 @@ import { useNavigate, useHref } from 'react-router-dom';
 import { Layout } from 'ui';
 import { AppRoutes } from './routes';
 import { queryClient } from './lib/queryClient';
+import { ThemeProvider } from './lib/theme';
+
+import { ThemeToggle } from './components/ThemeToggle';
 
 function AppContents() {
   const navigate = useNavigate();
 
   return (
     <RouterProvider navigate={navigate} useHref={useHref}>
-      <Layout>
+      <Layout headerChildren={<ThemeToggle />}>
         <AppRoutes />
       </Layout>
     </RouterProvider>
@@ -21,9 +24,11 @@ function AppContents() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <AppContents />
-      </Router>
+      <ThemeProvider>
+        <Router>
+          <AppContents />
+        </Router>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

@@ -9,7 +9,7 @@ export interface HeaderProps {
 
 export function Header({ title = 'Application Title', className, children }: HeaderProps) {
   return (
-    <AriaHeader className={`bg-gray-800 text-white p-4 flex justify-between items-center ${className || ''}`}>
+    <AriaHeader className={`bg-white dark:bg-gray-800 text-gray-800 dark:text-white p-4 flex justify-between items-center shadow-md ${className || ''}`}>
       <Heading level={1} className="text-xl font-bold">
         {title}
       </Heading>

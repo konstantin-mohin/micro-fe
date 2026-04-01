@@ -14,7 +14,7 @@ describe('App', () => {
 
   test('renders the shared UI button', () => {
     render(<App />);
-    expect(screen.getByRole('button', { name: /Shared UI Button/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Click Me \(UI Package\)/i })).toBeInTheDocument();
   });
 
   test('renders the remote button from microfrontend-one', async () => {

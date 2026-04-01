@@ -9,8 +9,8 @@ export interface ButtonProps extends AriaButtonProps {
 
 export function Button({ variant = 'primary', className, ...props }: ButtonProps) {
   const variantStyles = {
-    primary: 'bg-blue-500 text-white hover:bg-blue-600 shadow-md',
-    secondary: 'bg-gray-200 text-black hover:bg-gray-300 shadow-sm',
+    primary: 'bg-blue-500 text-white hover:bg-blue-600 shadow-md dark:bg-blue-700 dark:hover:bg-blue-800',
+    secondary: 'bg-gray-200 text-black hover:bg-gray-300 shadow-sm dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600',
   };
 
   return (

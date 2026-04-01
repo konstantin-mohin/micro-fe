@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import axios from 'axios';
-import { Button } from 'ui';
+import { Button, PageTitle } from 'ui';
 import { Link } from 'react-router-dom';
 
 const RemoteButton = lazy(() => import('microfrontend_one/Button'));
@@ -20,7 +20,7 @@ export function Home() {
 
   return (
     <div className="text-center mt-12">
-      <h1 className="text-4xl font-extrabold text-blue-600 mb-4">{message} okay </h1>
+      <PageTitle>{message} okay </PageTitle>
       <Suspense fallback={<div>Loading...</div>}>
         <RemoteButton />
       </Suspense>

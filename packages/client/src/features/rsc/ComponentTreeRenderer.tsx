@@ -3,7 +3,7 @@ import Expandable from '../../components/Expandable';
 
 interface ComponentNode {
   component: string;
-  props: { [key: string]: any; children?: TreeNode };
+  props: { [key: string]: unknown; children?: TreeNode };
   key?: string;
 }
 

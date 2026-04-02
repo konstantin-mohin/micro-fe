@@ -23,6 +23,7 @@ RUN pnpm install --frozen-lockfile
 
 # Copy source code
 COPY --from=pruner /app/out/full/ .
+COPY --from=pruner /app/tsconfig.json ./
 
 # Build the project
 RUN pnpm turbo run build --filter=server

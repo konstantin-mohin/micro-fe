@@ -1,10 +1,13 @@
 # Dependencies
-/node_modules
+node_modules/
 /.pnpm-lock.yaml
 
 # Build artifacts
 /dist
 /build
+test-results/
+playwright-report/
+blob-report/
 
 # Logs
 npm-debug.log*

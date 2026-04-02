@@ -146,3 +146,12 @@ jobs:
           docker build . -f packages/${{ matrix.app }}/Dockerfile -t ghcr.io/${{ steps.lowercase_owner.outputs.owner }}/${{ matrix.app }}:latest -t ghcr.io/${{ steps.lowercase_owner.outputs.owner }}/${{ matrix.app }}:${{ github.sha }}
           docker push ghcr.io/${{ steps.lowercase_owner.outputs.owner }}/${{ matrix.app }}:latest
           docker push ghcr.io/${{ steps.lowercase_owner.outputs.owner }}/${{ matrix.app }}:${{ github.sha }}
+          docker save -o ${{ matrix.app }}-image.tar ghcr.io/${{ steps.lowercase_owner.outputs.owner }}/${{ matrix.app }}:${{ github.sha }}
+
+      - name: Upload Docker Image Artifact
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.app }}-docker-image
+          path: ${{ matrix.app }}-image.tar
+          retention-days: 30

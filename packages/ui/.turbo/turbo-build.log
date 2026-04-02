@@ -22,4 +22,4 @@ built modules 508 KiB (javascript) 84 bytes (share-init) 84 bytes (consume-share
     consume shared module (default) react@^19.2.0 (singleton) (fallback: ../../node_...(truncated) 42 bytes [built] [code generated]
     consume shared module (default) react-dom@^19.2.0 (singleton) (fallback: ../../n...(truncated) 42 bytes [built] [code generated]
   container entry 42 bytes [built] [code generated]
-webpack 5.104.1 compiled successfully in 793 ms
+webpack 5.104.1 compiled successfully in 823 ms

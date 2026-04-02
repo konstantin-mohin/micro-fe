@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from './App';
 import axios from 'axios';
 
@@ -8,7 +8,6 @@ jest.mock('axios');
 
 // Mock the remote modules
 jest.mock('microfrontend_one/Button', () => () => <button>Remote Button</button>, { virtual: true });
-jest.mock('microfrontend_one/Profile', () => () => <div>Remote Profile</div>, { virtual: true });
 
 describe('App', () => {
   beforeEach(() => {

@@ -60,14 +60,14 @@ describe('RSCPage', () => {
     // We create a completely arbitrary, dynamic payload
     // We don't care what's inside it, just that it gets passed down.
     const dynamicServerPayload = {
-      type: 'DynamicServerComponent',
-      data: {
+      component: 'DynamicServerComponent',
+      props: {
         randomId: Math.random(),
-        message: 'This could be anything from the server'
-      },
-      children: [
-        { type: 'Child', id: 1 }
-      ]
+        message: 'This could be anything from the server',
+        children: [
+          { component: 'Child', props: { id: 1 } }
+        ]
+      }
     };
 
     (axios.get as jest.Mock).mockResolvedValue({ data: dynamicServerPayload });

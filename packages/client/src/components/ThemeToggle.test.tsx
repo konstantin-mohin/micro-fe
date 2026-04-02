@@ -18,7 +18,7 @@ describe('Theme Functionality', () => {
     // Mock window.matchMedia for default system preference (light mode)
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: jest.fn().mockImplementation(query => ({
+      value: jest.fn().mockImplementation((query) => ({
         matches: false, // false means 'light' is preferred by system
         media: query,
         onchange: null,
@@ -49,7 +49,7 @@ describe('Theme Functionality', () => {
     // Mock system preference to dark mode
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: jest.fn().mockImplementation(query => ({
+      value: jest.fn().mockImplementation(() => ({
         matches: true, // true means 'dark' is preferred
       })),
     });
@@ -70,7 +70,7 @@ describe('Theme Functionality', () => {
     localStorage.setItem('theme', 'light');
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: jest.fn().mockImplementation(query => ({
+      value: jest.fn().mockImplementation(() => ({
         matches: true, // system wants dark
       })),
     });

@@ -31,8 +31,8 @@ const config: StorybookConfig = {
     // Remove any existing CSS rules
     if (config.module?.rules) {
       config.module.rules = config.module.rules.filter(rule => {
-        if (!rule || typeof rule !== 'object') return true;
-        const test = (rule as any).test;
+        if (!rule || typeof rule !== 'object' || Array.isArray(rule)) return true;
+        const test = (rule as { test?: unknown }).test;
         if (!test) return true;
         return !test.toString().includes('css');
       });

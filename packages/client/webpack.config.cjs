@@ -6,7 +6,17 @@ module.exports = {
   entry: './src/index.jsx',
   mode: 'development',
   devServer: {
-    static: path.join(__dirname, 'dist'),
+    static: [
+      {
+        directory: path.join(__dirname, 'dist'),
+        publicPath: '/',
+      },
+      {
+        directory: path.resolve(__dirname, '../ui/storybook-static'),
+        publicPath: '/design-system',
+        serveIndex: true,
+      },
+    ],
     port: 3000,
     historyApiFallback: true,
     proxy: {

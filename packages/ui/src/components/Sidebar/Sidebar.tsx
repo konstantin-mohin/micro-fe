@@ -17,6 +17,7 @@ export function Sidebar({
         { id: '4-3', label: 'Transitions', href: '/rsc/transitions' }
       ]
     },
+    { id: '5', label: 'Design System', href: '/design-system/', target: '_blank', isExternal: true },
   ],
   className
 }: SidebarProps) {

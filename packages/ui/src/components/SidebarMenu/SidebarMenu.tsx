@@ -5,6 +5,8 @@ export interface SidebarMenuItem {
   id: string;
   label: string;
   href?: string;
+  target?: string;
+  isExternal?: boolean;
   icon?: React.ReactNode;
   children?: SidebarMenuItem[];
 }
@@ -76,8 +78,10 @@ function SidebarMenuItemComponent({ item, depth = 0 }: { item: SidebarMenuItem, 
     <li>
       <Link
         href={item.href}
+        target={item.target}
+        rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
         className={({ isPressed, isFocused, isHovered }) => `
-          block px-4 py-2 rounded transition-colors cursor-pointer outline-none
+          flex items-center justify-between px-4 py-2 rounded transition-colors cursor-pointer outline-none
           ${isHovered ? 'bg-gray-200 dark:bg-gray-700' : ''}
           ${isPressed ? 'bg-gray-300 dark:bg-gray-600' : ''}
           ${isFocused ? 'outline outline-2 outline-blue-300' : ''}
@@ -89,6 +93,11 @@ function SidebarMenuItemComponent({ item, depth = 0 }: { item: SidebarMenuItem, 
           {item.icon}
           {item.label}
         </span>
+        {item.isExternal && (
+          <svg className="w-3.5 h-3.5 opacity-60 ml-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        )}
       </Link>
     </li>
   );

@@ -29,7 +29,7 @@ export function SidebarMenu({ items, className }: SidebarMenuProps) {
 }
 
 function SidebarMenuItemComponent({ item, depth = 0 }: { item: SidebarMenuItem, depth?: number }) {
-  const paddingLeft = `${(depth + 1) * 1}rem`;
+  const paddingLeft = `calc(${(depth + 1) * 0.75}rem + 1rem)`;
 
   if (item.children && item.children.length > 0) {
     return (
@@ -62,7 +62,7 @@ function SidebarMenuItemComponent({ item, depth = 0 }: { item: SidebarMenuItem, 
               </Button>
               <DisclosurePanel>
                 <ul className="mt-1 space-y-1">
-                  {item.children!.map(child => (
+                  {item.children?.map(child => (
                     <SidebarMenuItemComponent key={child.id} item={child} depth={depth + 1} />
                   ))}
                 </ul>

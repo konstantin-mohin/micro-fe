@@ -1,8 +1,10 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
-
 import { dirname } from "path"
-
+import path from "path"
 import { fileURLToPath } from "url"
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 /**
 * This function is used to resolve the absolute path of a package.
@@ -21,6 +23,37 @@ const config: StorybookConfig = {
     getAbsolutePath('@storybook/addon-a11y'),
     getAbsolutePath('@storybook/addon-docs')
   ],
-  "framework": getAbsolutePath('@storybook/react-webpack5')
+  "framework": {
+    name: getAbsolutePath('@storybook/react-webpack5'),
+    options: {}
+  },
+  webpackFinal: async (config) => {
+    // Remove any existing CSS rules
+    if (config.module?.rules) {
+      config.module.rules = config.module.rules.filter(rule => {
+        if (!rule || typeof rule !== 'object') return true;
+        const test = (rule as any).test;
+        if (!test) return true;
+        return !test.toString().includes('css');
+      });
+
+      // Add our custom CSS rule that matches your UI package's webpack config
+      config.module.rules.push({
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
+          },
+          'postcss-loader',
+        ],
+        include: path.resolve(__dirname, '../'),
+      });
+    }
+    return config;
+  },
 };
 export default config;

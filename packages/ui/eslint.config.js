@@ -6,15 +6,24 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'storybook-static']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
     ],
+    plugins: {
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+    },
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,

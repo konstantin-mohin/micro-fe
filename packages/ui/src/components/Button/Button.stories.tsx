@@ -32,3 +32,11 @@ export const Secondary: Story = {
     children: 'Secondary Button',
   },
 };
+
+export const Large: Story = {
+  args: {
+    variant: 'primary',
+    size: 'lg',
+    children: 'Large Button',
+  },
+};

@@ -15,8 +15,8 @@ test.describe('Monorepo E2E', () => {
   test('Microfrontend Validation', async ({ page }) => {
     await page.goto('/');
 
-    // Assert the remote button from microfrontend-one successfully loads
-    const remoteButton = page.locator('button', { hasText: 'Hello from microfrontend-one!' });
+    // Assert the remote button from microfrontend-one successfully loads and shows the dynamic count
+    const remoteButton = page.locator('button', { hasText: /Remote Count:/i });
     await expect(remoteButton).toBeVisible();
   });
 

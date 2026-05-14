@@ -6,6 +6,7 @@ import { Layout } from 'ui';
 import { AppRoutes } from './routes';
 import { queryClient } from './lib/queryClient';
 import { ThemeProvider } from './lib/theme';
+import { DevProfiler } from './components/DevProfiler';
 
 import { ThemeToggle } from './components/ThemeToggle';
 
@@ -23,13 +24,15 @@ function AppContents() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <Router>
-          <AppContents />
-        </Router>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <DevProfiler id="app">
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <Router>
+            <AppContents />
+          </Router>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </DevProfiler>
   );
 }
 

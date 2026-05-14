@@ -3,7 +3,7 @@ const { ModuleFederationPlugin } = require('webpack').container;
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.jsx',
+  entry: './src/index.ts',
   mode: 'development',
   devServer: {
     static: path.join(__dirname, 'dist'),

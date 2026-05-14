@@ -26,9 +26,9 @@ export const Default: Story = {
       },
       { id: '4', label: 'React Query', href: '/react-query' },
       { id: '5', label: 'Modern React', children: [
-          { id: '5-1', label: 'Server Components', href: '/rsc' },
-          { id: '5-2', label: 'Actions', href: '/rsc/actions' },
-          { id: '5-3', label: 'Transitions', href: '/rsc/transitions' }
+          { id: '5-1', label: 'Server-Driven UI', href: '/server-driven-ui' },
+          { id: '5-2', label: 'Actions', href: '/server-driven-ui/actions' },
+          { id: '5-3', label: 'Transitions', href: '/server-driven-ui/transitions' }
         ]
       },
     ],

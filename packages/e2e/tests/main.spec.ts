@@ -49,11 +49,11 @@ test.describe('Monorepo E2E', () => {
     }
   });
 
-  test('RSC Page Validation', async ({ page }) => {
-    await page.goto('/rsc');
+  test('Server-Driven UI Page Validation', async ({ page }) => {
+    await page.goto('/server-driven-ui');
 
     // Wait for the mock server component tree to render
-    const header = page.locator('h1', { hasText: /React Server Components \(Simulated\)/i });
+    const header = page.locator('h1', { hasText: /Server-Driven UI \(Simulated\)/i });
     await expect(header).toBeVisible();
 
     // The note content is inside an Expandable component, so we need to click "Toggle" first

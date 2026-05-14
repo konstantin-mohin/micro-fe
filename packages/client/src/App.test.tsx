@@ -11,7 +11,7 @@ jest.mock('microfrontend_one/Button', () => () => <button>Remote Button</button>
 
 describe('App', () => {
   beforeEach(() => {
-    (axios.get as jest.Mock).mockImplementation((url) => {
+    (axios.get as jest.Mock).mockImplementation((url: string) => {
       if (url === '/api/hello') {
         return Promise.resolve({ data: { message: 'Mocked Hello' } });
       }

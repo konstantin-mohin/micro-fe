@@ -10,6 +10,7 @@ const Button = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const controller = new AbortController();
     fetch('/api/random-number')
       .then((res) => {
         if (!res.ok) throw new Error('Failed to fetch number');
@@ -20,6 +21,7 @@ const Button = () => {
         console.error('Error fetching random number:', err);
         setError('Error');
       });
+    return () => controller.abort();
   }, []);
 
   return (

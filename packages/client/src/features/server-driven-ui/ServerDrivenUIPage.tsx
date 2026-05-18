@@ -8,7 +8,7 @@ export function ServerDrivenUIPage() {
   const { data: serverPayload, isLoading, error } = useQuery<TreeNode>({
     queryKey: ['notes-sdui'],
     queryFn: async () => {
-      const response = await axios.get('/api/notes');
+      const response = await axios.get<TreeNode>('/api/notes');
       return response.data;
     },
   });

@@ -2,7 +2,7 @@ import { Profiler, useState, useSyncExternalStore } from 'react';
 
 interface ProfilerData {
   id: string;
-  phase: 'mount' | 'update';
+  phase: 'mount' | 'update' | 'nested-update';
   actualTime: number;
   baseTime: number;
 }
@@ -16,7 +16,7 @@ function ProfilerOverlay({ data, onClose }: { data: ProfilerData | null; onClose
   if (!data) return null;
 
   return (
-    <div className="fixed top-14 right-4 z-50 bg-yellow-100 dark:bg-yellow-900 border border-yellow-400 dark:border-yellow-600 rounded-lg p-3 shadow-lg text-xs font-mono max-w-xs">
+    <div className="fixed top-28 right-4 z-50 bg-yellow-100 dark:bg-yellow-900 border border-yellow-400 dark:border-yellow-600 rounded-lg p-3 shadow-lg text-xs font-mono max-w-xs">
       <div className="flex justify-between items-center mb-1">
         <span className="font-bold text-yellow-800 dark:text-yellow-200">
           ⚡ Profiler: {data.id}
@@ -68,15 +68,15 @@ export function DevProfiler({ children, id }: DevProfilerProps) {
 
   const handleOnRender = (
     _profilerId: string,
-    _phase: 'mount' | 'update',
+    _phase: 'mount' | 'update' | 'nested-update',
     _actualDuration: number,
     _baseDuration: number
   ) => {
     profilerDataStore.data = {
       id: _profilerId,
       phase: _phase,
-      actualTime: Number(_actualDuration),
-      baseTime: Number(_baseDuration),
+      actualTime: _actualDuration,
+      baseTime: _baseDuration,
     };
     profilerDataStore.notify();
   };
@@ -89,11 +89,10 @@ export function DevProfiler({ children, id }: DevProfilerProps) {
     <>
       <button
         onClick={handleToggle}
-        className={`fixed top-14 right-4 z-50 rounded-lg px-3 py-2 text-xs font-mono shadow-lg transition-colors ${
-          isEnabled 
-            ? 'bg-red-500 hover:bg-red-600 text-white' 
-            : 'bg-blue-500 hover:bg-blue-600 text-white'
-        }`}
+        className={`fixed top-14 right-4 z-50 rounded-lg px-3 py-2 text-xs font-mono shadow-lg transition-colors ${isEnabled
+          ? 'bg-red-500 hover:bg-red-600 text-white'
+          : 'bg-blue-500 hover:bg-blue-600 text-white'
+          }`}
       >
         {isEnabled ? 'Disable Profiler' : 'Enable Profiler'}
       </button>
@@ -117,7 +116,7 @@ function ProfilerDisplay() {
     (callback) => profilerDataStore.subscribe(callback),
     () => profilerDataStore.getSnapshot()
   );
-  
+
   const [isManuallyClosed, setIsManuallyClosed] = useState(false);
 
   if (isManuallyClosed || !data) return null;

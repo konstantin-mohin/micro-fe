@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
-import { RSCPage } from './RSCPage';
+import { ServerDrivenUIPage } from './ServerDrivenUIPage';
 import { ComponentTreeRenderer } from './ComponentTreeRenderer';
 
 // Mock axios
@@ -33,7 +33,7 @@ const renderWithProviders = (ui: React.ReactElement) => {
   );
 };
 
-describe('RSCPage', () => {
+describe('ServerDrivenUIPage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -42,18 +42,18 @@ describe('RSCPage', () => {
     // Keep the promise unresolved to test the loading state
     (axios.get as jest.Mock).mockImplementation(() => new Promise(() => {}));
 
-    renderWithProviders(<RSCPage />);
+    renderWithProviders(<ServerDrivenUIPage />);
 
-    expect(screen.getByText(/Rendering RSC from server.../i)).toBeInTheDocument();
+    expect(screen.getByText(/Rendering UI from server.../i)).toBeInTheDocument();
   });
 
   test('shows error message when the server request fails', async () => {
     (axios.get as jest.Mock).mockRejectedValue(new Error('Network Error'));
 
-    renderWithProviders(<RSCPage />);
+    renderWithProviders(<ServerDrivenUIPage />);
 
     // Wait for the query to fail and display the error message
-    expect(await screen.findByText(/Failed to render RSC/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Failed to render UI/i)).toBeInTheDocument();
   });
 
   test('passes dynamic server payload directly to the ComponentTreeRenderer', async () => {
@@ -72,11 +72,11 @@ describe('RSCPage', () => {
 
     (axios.get as jest.Mock).mockResolvedValue({ data: dynamicServerPayload });
 
-    renderWithProviders(<RSCPage />);
+    renderWithProviders(<ServerDrivenUIPage />);
 
     // Wait for the loading state to disappear
     await waitFor(() => {
-      expect(screen.queryByText(/Rendering RSC from server.../i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Rendering UI from server.../i)).not.toBeInTheDocument();
     });
 
     // Verify the ComponentTreeRenderer was called

@@ -18,7 +18,7 @@ app.get('/api/notes', async (_req: Request, res: Response) => {
     const serverComponentPayload = await Notes();
     res.json(serverComponentPayload);
   } catch {
-    res.status(500).json({ error: 'RSC Render Error' });
+    res.status(500).json({ error: 'Server-Driven UI Render Error' });
   }
 });
 
@@ -29,6 +29,11 @@ app.get('/api/data', (_req: Request, res: Response) => {
       { id: 2, name: 'Item 2', description: 'This is item 2' },
     ],
   });
+});
+
+app.get('/api/random-number', (_req: Request, res: Response) => {
+  const randomNumber = Math.floor(Math.random() * 1000) + 1;
+  res.json({ number: randomNumber });
 });
 
 app.listen(port, () => {

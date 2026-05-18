@@ -1,2 +1,2 @@
 export * from './ComponentTreeRenderer';
-export * from './RSCPage';
+export * from './ServerDrivenUIPage';

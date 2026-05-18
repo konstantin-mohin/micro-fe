@@ -7,7 +7,7 @@ interface ComponentNode {
   key?: string;
 }
 
-type TreeNode = string | ComponentNode | (string | ComponentNode)[];
+export type TreeNode = string | ComponentNode | (string | ComponentNode)[];
 
 const componentMap: { [key: string]: React.ElementType } = {
   Expandable,
@@ -39,10 +39,11 @@ export function ComponentTreeRenderer({ node }: { node: TreeNode }): React.React
   if (!Component) {
     return null;
   }
+  const { children, ...restProps } = props;
 
   return (
-    <Component key={key} {...props}>
-      {props.children && <ComponentTreeRenderer node={props.children} />}
+    <Component key={key} {...restProps}>
+      {children !== undefined && <ComponentTreeRenderer node={children} />}
     </Component>
   );
 }

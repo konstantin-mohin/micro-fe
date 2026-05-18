@@ -3,9 +3,10 @@ const { ModuleFederationPlugin } = require('webpack').container;
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.jsx',
+  entry: './src/index.ts',
   mode: 'development',
   devServer: {
+    allowedHosts: 'all',
     static: [
       {
         directory: path.join(__dirname, 'dist'),

@@ -91,8 +91,10 @@ export default function VirtualizedList() {
       if (scrollTracker.current.timeout) {
         window.clearTimeout(scrollTracker.current.timeout);
       }
+
+      debouncedSetHeight.cancel();
     };
-  }, []);
+  }, [debouncedSetHeight]);
 
   const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const currentScrollTop = e.currentTarget.scrollTop;

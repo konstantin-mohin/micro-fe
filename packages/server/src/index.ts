@@ -35,6 +35,7 @@ async function initializePosts() {
       console.log(`Initialized cache with ${postsCache.length} posts.`);
     } catch (error) {
       console.error("Failed to initialize posts cache:", error);
+      initializationPromise = null; // Reset so we can retry on next request
     }
   })()
   return initializationPromise;
@@ -64,7 +65,7 @@ app.get('/api/posts/events', (_req: Request, res: Response) => {
   });
 
   // CATCH ASYNC ERRORS: Fired when the TCP connection forcefully drops 
-  res.on('error', (_err) => {
+  res.on('error', (_err: Error) => {
     console.warn(`[SSE] Client ${clientId} ${_err.message} network error. Removing.`);
     clients = clients.filter(client => client !== res);
   });
@@ -86,8 +87,9 @@ setInterval(() => {
       }
 
       // Write returns false if there's a stream error/backpressure
-      const success = client.write(`data: ${payload}\n\n`);
-      return success; // Keep client if write was successfully buffered
+      client.write(`data: ${payload}\n\n`);
+      // we should always keep the client in the list as long as client.destroyed and client.writableEnded are false, and let Node.js handle the buffering
+      return true; // Keep client if write was successfully buffered
     });
   }
 }, 200);
@@ -99,7 +101,9 @@ setInterval(() => {
       if (client.destroyed || client.writableEnded) {
         return false;
       }
-      return client.write('event: ping\ndata: {"ping":true}\n\n');
+      client.write('event: ping\ndata: {"ping":true}\n\n');
+
+      return true; // Keep client if write was successfully buffered
     });
   }
 }, 5000);

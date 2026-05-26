@@ -53,7 +53,8 @@ export function useLivePosts() {
 
     const handleFailure = (msg = "Live updates disconnected. We will try to reconnect.") => {
       if (!alertShownRef.current) {
-        window.alert(msg);
+        //TODO: make snak component to show the message
+        console.warn(msg);
         alertShownRef.current = true;
       }
 

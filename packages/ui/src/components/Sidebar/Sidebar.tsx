@@ -11,7 +11,9 @@ export function Sidebar({
     { id: '1', label: 'Home', href: '/' },
     { id: '2', label: 'Profile', href: '/profile' },
     { id: '3', label: 'React Query', href: '/react-query' },
-    { id: '4', label: 'Modern React', children: [
+    { id: '5', label: 'Big List', href: '/big-list' },
+    {
+      id: '4', label: 'Modern React', children: [
         { id: '4-1', label: 'Server-Driven UI', href: '/server-driven-ui' },
         { id: '4-2', label: 'Actions', href: '/server-driven-ui/actions' },
         { id: '4-3', label: 'Transitions', href: '/server-driven-ui/transitions' }

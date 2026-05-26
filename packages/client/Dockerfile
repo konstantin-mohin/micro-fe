@@ -41,9 +41,13 @@ RUN pnpm turbo run build --filter=client
 FROM nginx:alpine AS runner
 
 # Copy the built assets from the builder stage
-# CHECK THIS PATH: Verify if your build output is in "packages/client/dist" 
-# or "apps/client/dist" depending on your folder structure.
 COPY --from=builder /app/packages/client/dist /usr/share/nginx/html
+
+# Use envsubst to replace placeholders in index.html at runtime
+# We create a script that runs before Nginx starts
+RUN echo '#!/bin/sh' > /docker-entrypoint.d/30-subst-env.sh && \
+    echo 'envsubst "${MICROFRONTEND_ONE_URL}" < /usr/share/nginx/html/index.html > /usr/share/nginx/html/index.html.tmp && mv /usr/share/nginx/html/index.html.tmp /usr/share/nginx/html/index.html' >> /docker-entrypoint.d/30-subst-env.sh && \
+    chmod +x /docker-entrypoint.d/30-subst-env.sh
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

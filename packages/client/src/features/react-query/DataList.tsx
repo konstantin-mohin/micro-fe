@@ -7,11 +7,15 @@ interface DataItem {
   description: string;
 }
 
+interface DataResponse {
+  items: DataItem[];
+}
+
 export function DataList() {
   const { data, isLoading, error } = useQuery<{ items: DataItem[] }>({
     queryKey: ['exampleData'],
     queryFn: async () => {
-      const response = await axios.get('/api/data');
+      const response = await axios.get<DataResponse>('/api/data');
       return response.data;
     },
   });

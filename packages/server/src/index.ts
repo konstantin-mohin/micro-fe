@@ -65,7 +65,7 @@ app.get('/api/posts/events', (_req: Request, res: Response) => {
 
   // CATCH ASYNC ERRORS: Fired when the TCP connection forcefully drops 
   res.on('error', (_err) => {
-    console.warn(`[SSE] Client ${clientId} network error. Removing.`);
+    console.warn(`[SSE] Client ${clientId} ${_err.message} network error. Removing.`);
     clients = clients.filter(client => client !== res);
   });
 });

@@ -1,16 +1,8 @@
 import { Link, useLoaderData } from 'react-router-dom';
-import { BigList, type BigListLoaderData } from './BigList';
+import { BigList } from './BigList';
 import { PageTitle } from 'ui';
 import { Suspense } from 'react';
-import { Post } from 'shared';
-
-export function bigListLoader(): BigListLoaderData {
-  const itemsPromise = fetch("/api/posts")
-    .then(res => res.json())
-    .then((data: Post[]) => data);
-  return { itemsPromise };
-}
-
+import { bigListLoader } from './loader';
 
 export function BigListPage() {
   const { itemsPromise } = useLoaderData<typeof bigListLoader>();

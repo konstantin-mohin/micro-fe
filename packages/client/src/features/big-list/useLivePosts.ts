@@ -3,11 +3,13 @@ import { useBigListStore } from "./store";
 
 export function useLivePosts() {
   const alertShownRef = useRef(false);
-  const lastPingTimeRef = useRef<number>(Date.now());
+  const lastPingTimeRef = useRef<number>(0);
   const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const eventSourceRef = useRef<EventSource | null>(null);
 
   useEffect(() => {
+    // Initialize the timestamp when the effect runs, not during render
+    lastPingTimeRef.current = Date.now();
     const connect = () => {
       if (reconnectTimeoutRef.current) {
         clearTimeout(reconnectTimeoutRef.current);

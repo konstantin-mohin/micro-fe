@@ -58,7 +58,7 @@ export default function VirtualizedList() {
   const [scrollTop, setScrollTop] = useState(0);
 
   const [isScrollingFast, setIsScrollingFast] = useState(false);
-  const scrollTracker = useRef({ top: 0, time: performance.now(), timeout: 0 });
+  const scrollTracker = useRef({ top: 0, time: 0, timeout: 0 });
 
   const itemIds = useBigListStore((state) => state.itemIds);
 
@@ -73,7 +73,7 @@ export default function VirtualizedList() {
     if (!container) return;
 
     const observer = new ResizeObserver((entries) => {
-      for (let entry of entries) {
+      for (const entry of entries) {
         debouncedSetHeight(entry.contentRect.height);
       }
     });
@@ -82,19 +82,21 @@ export default function VirtualizedList() {
 
     return () => {
       observer.disconnect();
-    };
-  }, [debouncedSetHeight]);
-
-  // Ensure scroll timeout is cleared on unmount
-  useEffect(() => {
-    return () => {
-      if (scrollTracker.current.timeout) {
-        window.clearTimeout(scrollTracker.current.timeout);
-      }
-
       debouncedSetHeight.cancel();
     };
   }, [debouncedSetHeight]);
+
+  // Ensure scroll timeout is cleared on unmount and initialize time
+  useEffect(() => {
+    scrollTracker.current.time = performance.now();
+    const tracker = scrollTracker.current;
+    return () => {
+      const currentTimeout = tracker.timeout;
+      if (currentTimeout) {
+        window.clearTimeout(currentTimeout);
+      }
+    };
+  }, []);
 
   const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const currentScrollTop = e.currentTarget.scrollTop;

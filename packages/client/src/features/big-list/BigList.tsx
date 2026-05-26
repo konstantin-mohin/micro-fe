@@ -2,11 +2,7 @@ import { use, useLayoutEffect } from "react";
 import VirtualizedList from "../../components/VirtualizedList";
 import { useBigListStore } from "./store";
 import { useLivePosts } from "./useLivePosts";
-import { Post } from "shared";
-
-export interface BigListLoaderData {
-  itemsPromise: Promise<Post[]>;
-}
+import { type BigListLoaderData } from "./loader";
 
 export function BigList({ itemsPromise }: BigListLoaderData) {
   const items = use(itemsPromise);

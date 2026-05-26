@@ -20,7 +20,7 @@ async function initializePosts() {
   initializationPromise = (async () => {
     try {
       const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-      const data = await response.json() as any[];
+      const data = await response.json() as { userId: number; id: number; title: string; body: string }[];
 
       // Multiply the data 20 times to simulate a large list (2,000 items)
       postsCache = Array.from({ length: 20 }, (_, i) =>

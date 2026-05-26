@@ -7,6 +7,7 @@ module.exports = {
   mode: 'development',
   devServer: {
     allowedHosts: 'all',
+    compress: false, // MANDATORY for SSE: prevents buffering/compression
     static: [
       {
         directory: path.join(__dirname, 'dist'),
@@ -24,6 +25,8 @@ module.exports = {
       '/api': {
         target: 'http://localhost:3001',
         changeOrigin: true,
+        secure: false,
+        xfwd: true,
       },
     },
   },
@@ -54,7 +57,30 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'host_app',
       remotes: {
-        'microfrontend_one': `microfrontend_one@${process.env.MICROFRONTEND_ONE_URL || 'http://localhost:5174/remoteEntry.js'}`,
+        'microfrontend_one': `promise new Promise(resolve => {
+          const manifestUrl = window.APP_MANIFEST?.microfrontend_one;
+          const url = (!manifestUrl || manifestUrl.includes('\${')) ? 'http://localhost:5174' : manifestUrl;
+          const script = document.createElement('script');
+          script.src = \`\${url.replace(/\\/$/, '')}/remoteEntry.js\`;
+          script.onload = () => {
+            const proxy = {
+              get: (request) => window.microfrontend_one.get(request),
+              init: (arg) => {
+                try {
+                  return window.microfrontend_one.init(arg);
+                } catch(e) {
+                  console.log('remote container already initialized');
+                }
+              }
+            };
+            resolve(proxy);
+          };
+          script.onerror = () => {
+            console.error('Failed to load microfrontend_one');
+            resolve(null);
+          };
+          document.head.appendChild(script);
+        })`,
       },
       shared: {
         react: { singleton: true, eager: true, requiredVersion: '^19.2.0' },

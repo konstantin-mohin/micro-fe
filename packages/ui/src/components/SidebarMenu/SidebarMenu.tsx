@@ -11,7 +11,7 @@ export interface SidebarMenuItem {
   children?: SidebarMenuItem[];
 }
 
-export interface SidebarMenuProps {
+export type SidebarMenuProps = {
   items: SidebarMenuItem[];
   className?: string;
 }

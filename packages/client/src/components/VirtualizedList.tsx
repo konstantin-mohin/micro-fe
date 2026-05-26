@@ -1,4 +1,4 @@
-import { useRef, useState, useLayoutEffect, useMemo, memo } from "react";
+import { useRef, useState, useLayoutEffect, useMemo, memo, useEffect } from "react";
 import { debounce } from "../lib/utils";
 import { useBigListStore } from "../features/big-list/store";
 
@@ -84,6 +84,15 @@ export default function VirtualizedList() {
       observer.disconnect();
     };
   }, [debouncedSetHeight]);
+
+  // Ensure scroll timeout is cleared on unmount
+  useEffect(() => {
+    return () => {
+      if (scrollTracker.current.timeout) {
+        window.clearTimeout(scrollTracker.current.timeout);
+      }
+    };
+  }, []);
 
   const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const currentScrollTop = e.currentTarget.scrollTop;

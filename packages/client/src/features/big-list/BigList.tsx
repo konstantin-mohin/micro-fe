@@ -1,6 +1,7 @@
-import { use, useLayoutEffect, useEffect } from "react";
+import { use, useLayoutEffect } from "react";
 import VirtualizedList from "../../components/VirtualizedList";
 import { useBigListStore } from "./store";
+import { useLivePosts } from "./useLivePosts";
 import { Post } from "shared";
 
 export interface BigListLoaderData {
@@ -14,29 +15,7 @@ export function BigList({ itemsPromise }: BigListLoaderData) {
     useBigListStore.getState().setItems(items);
   }, [items]);
 
-  useEffect(() => {
-    const eventSource = new EventSource("/api/posts/events");
-
-    eventSource.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        if (data.id && typeof data.likes === 'number') {
-          useBigListStore.getState().updateItem(data.id, { likes: data.likes });
-        }
-      } catch (e) {
-        console.error("[SSE Client] Error parsing data:", e);
-      }
-    };
-
-    eventSource.onerror = (err) => {
-      console.error("EventSource failed:", err);
-      eventSource.close();
-    };
-
-    return () => {
-      eventSource.close();
-    };
-  }, []);
+  useLivePosts();
 
   return (
     <div className="flex flex-col flex-1 min-h-0">

@@ -21,10 +21,13 @@ export const useBigListStore = create<BigListState>((set) => ({
     set({ items: itemsMap, itemIds: ids });
   },
   updateItem: (id, updates) =>
-    set((state) => ({
-      items: {
-        ...state.items,
-        [id]: state.items[id] ? { ...state.items[id], ...updates } : state.items[id],
-      },
-    })),
+    set((state) => {
+      if (!state.items[id]) return {};
+      return {
+        items: {
+          ...state.items,
+          [id]: { ...state.items[id], ...updates },
+        },
+      };
+    }),
 }));

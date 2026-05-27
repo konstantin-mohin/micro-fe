@@ -94,7 +94,6 @@ module.exports = {
           eager: true,
           requiredVersion: '^7.13.0',
         },
-        ui: { singleton: true, eager: true },
       },
     }),
     new HtmlWebpackPlugin({

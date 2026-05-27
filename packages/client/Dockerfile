@@ -43,10 +43,13 @@ FROM nginx:alpine AS runner
 # Copy the built assets from the builder stage
 COPY --from=builder /app/packages/client/dist /usr/share/nginx/html
 
-# Use envsubst to replace placeholders in index.html at runtime
-# We create a script that runs before Nginx starts
+# Prepare the index.html as a template to allow for non-destructive envsubst
+RUN mv /usr/share/nginx/html/index.html /usr/share/nginx/html/index.html.template
+
+# Use envsubst to replace placeholders in index.html at runtime.
+# This script runs every time the container starts.
 RUN echo '#!/bin/sh' > /docker-entrypoint.d/30-subst-env.sh && \
-    echo 'envsubst "${MICROFRONTEND_ONE_URL}" < /usr/share/nginx/html/index.html > /usr/share/nginx/html/index.html.tmp && mv /usr/share/nginx/html/index.html.tmp /usr/share/nginx/html/index.html' >> /docker-entrypoint.d/30-subst-env.sh && \
+    echo "envsubst '\\$MICROFRONTEND_ONE_URL' < /usr/share/nginx/html/index.html.template > /usr/share/nginx/html/index.html" >> /docker-entrypoint.d/30-subst-env.sh && \\
     chmod +x /docker-entrypoint.d/30-subst-env.sh
 
 EXPOSE 80

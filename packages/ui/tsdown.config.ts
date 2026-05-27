@@ -9,7 +9,7 @@ export default defineConfig({
   clean: true,
   minify: true,
   deps: {
-    neverBundle: ['react', 'react-dom'],
+    neverBundle: ['react', 'react-dom', 'react-aria-components', 'class-variance-authority', 'clsx', 'tailwind-merge'],
   },
 });
 

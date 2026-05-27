@@ -47,12 +47,12 @@ async function initializePosts() {
   return initializationPromise;
 }
 
-app.get('/api/posts', async (_req, res) => {
+app.get('/api/posts', async (_req: Request, res: Response) => {
   try {
     await initializePosts();
     res.json(postsCache);
   } catch (error) {
-    res.status(500).json({ error: "Failed to load posts" });
+    res.status(500).json({ error: `Failed to load posts: ${error}` });
   }
 });
 

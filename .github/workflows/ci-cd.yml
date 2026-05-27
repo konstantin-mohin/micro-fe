@@ -104,7 +104,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [server, client, microfrontend-one, ui]
+        app: [server, client, microfrontend-one]
 
     steps:
       - name: Checkout code

@@ -17,7 +17,7 @@ module.exports = {
       {
         test: /\.(js|jsx|ts|tsx)$/,
         loader: 'babel-loader',
-        exclude: /node_modules\/(?!ui)/,
+        exclude: /node_modules/,
         options: {
           presets: [
             '@babel/preset-env',
@@ -52,7 +52,6 @@ module.exports = {
           eager: true,
           requiredVersion: '^7.13.0',
         },
-        ui: { singleton: true, eager: true },
       },
     }),
     new HtmlWebpackPlugin({

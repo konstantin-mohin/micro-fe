@@ -89,17 +89,29 @@ setInterval(() => {
 
     const payload = JSON.stringify({ id: post.id, likes: post.likes });
 
-    // Filter out destroyed clients while broadcasting to healthy ones
+    // Filter out destroyed or slow clients while broadcasting to healthy ones
     clients = clients.filter(client => {
-      // If the socket is dead or no longer writable, remove this client
+      // 1. Check if the socket is physically dead
       if (client.destroyed || client.writableEnded) {
         return false;
       }
 
-      // Write returns false if there's a stream error/backpressure
+      /**
+       * BACKPRESSURE HANDLING:
+       * If the internal Node.js buffer (writableLength) is too high (> 512KB), 
+       * the client is not reading fast enough. We drop them to prevent memory growth (memory leak).
+       */
+      const BACKPRESSURE_THRESHOLD = 512 * 1024; // 512KB
+      if (client.writableLength > BACKPRESSURE_THRESHOLD) {
+        console.warn(`[SSE] Dropping slow client due to backpressure (${client.writableLength} bytes buffered)`);
+        client.destroy();
+        return false;
+      }
+
+      // 2. Perform the write. 
+      // Node.js will buffer the data if the network is busy.
       client.write(`data: ${payload}\n\n`);
-      // we should always keep the client in the list as long as client.destroyed and client.writableEnded are false, and let Node.js handle the buffering
-      return true; // Keep client if write was successfully buffered
+      return true;
     });
   }
 }, 200);

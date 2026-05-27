@@ -20,6 +20,11 @@ async function initializePosts() {
   initializationPromise = (async () => {
     try {
       const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+
+      if (!response.ok) {
+        throw new Error("HTTP error! status: " + response.status);
+      }
+
       const data = await response.json() as { userId: number; id: number; title: string; body: string }[];
 
       // Multiply the data 20 times to simulate a large list (2,000 items)
@@ -36,14 +41,19 @@ async function initializePosts() {
     } catch (error) {
       console.error("Failed to initialize posts cache:", error);
       initializationPromise = null; // Reset so we can retry on next request
+      throw error;
     }
   })()
   return initializationPromise;
 }
 
-app.get('/api/posts', async (_req: Request, res: Response) => {
-  await initializePosts();
-  res.json(postsCache);
+app.get('/api/posts', async (_req, res) => {
+  try {
+    await initializePosts();
+    res.json(postsCache);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to load posts" });
+  }
 });
 
 app.get('/api/posts/events', (_req: Request, res: Response) => {

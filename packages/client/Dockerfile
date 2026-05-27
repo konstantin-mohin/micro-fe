@@ -49,7 +49,7 @@ RUN mv /usr/share/nginx/html/index.html /usr/share/nginx/html/index.html.templat
 # Use envsubst to replace placeholders in index.html at runtime.
 # This script runs every time the container starts.
 RUN echo '#!/bin/sh' > /docker-entrypoint.d/30-subst-env.sh && \
-    echo 'envsubst "${MICROFRONTEND_ONE_URL}" < /usr/share/nginx/html/index.html.template > /usr/share/nginx/html/index.html' >> /docker-entrypoint.d/30-subst-env.sh && \
+    echo "envsubst '\\$MICROFRONTEND_ONE_URL' < /usr/share/nginx/html/index.html.template > /usr/share/nginx/html/index.html" >> /docker-entrypoint.d/30-subst-env.sh && \\
     chmod +x /docker-entrypoint.d/30-subst-env.sh
 
 EXPOSE 80

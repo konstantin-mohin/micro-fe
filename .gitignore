@@ -6,7 +6,30 @@ node_modules/
 # Build artifacts
 dist/
 build/
-/storybook-static
+test-results/
+playwright-report/
+blob-report/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDEs
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Misc
+.DS_Store
+firebase-debug.log
+*storybook.log
+storybook-static
 .turbo
 .turbo/
 **/.turbo

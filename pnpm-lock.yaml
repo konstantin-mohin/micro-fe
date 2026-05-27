@@ -440,13 +440,16 @@ importers:
         version: 29.4.9(@babel/core@7.29.0)(@jest/transform@30.3.0)(@jest/types@30.3.0)(babel-jest@30.3.0(@babel/core@7.29.0))(esbuild@0.27.7)(jest-util@30.3.0)(jest@30.3.0(@types/node@24.12.2)(ts-node@10.9.2(@swc/core@1.15.21(@swc/helpers@0.5.21))(@types/node@24.12.2)(typescript@5.9.3)))(typescript@5.9.3)
       tsdown:
         specifier: ^0.22.0
-        version: 0.22.0(@tsdown/css@0.22.0)(typescript@5.9.3)
+        version: 0.22.0(@tsdown/css@0.22.0)(typescript@5.9.3)(unrun@0.3.0(synckit@0.11.12))
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
       typescript-eslint:
         specifier: ^8.46.4
         version: 8.58.0(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
+      unrun:
+        specifier: ^0.3.0
+        version: 0.3.0(synckit@0.11.12)
 
 packages:
 
@@ -6098,6 +6101,16 @@ packages:
   unrs-resolver@1.11.1:
     resolution: {integrity: sha512-bSjt9pjaEBnNiGgc9rUiHGKv5l4/TGzDmYw3RhnkJGtLhbnnA/5qJj7x3dNDCRx/PJxu774LlH8lCOlB4hEfKg==}
 
+  unrun@0.3.0:
+    resolution: {integrity: sha512-5xw2AIVS2WR9Lqhz76qDIQLxipKRidf7Nq+Iz5SZ8shk1OmRlxnc6FyI/1Q2m99WLj6cbqaKFdESfWE99KPzlA==}
+    engines: {node: ^22.13.0 || >=24.0.0}
+    hasBin: true
+    peerDependencies:
+      synckit: ^0.11.11
+    peerDependenciesMeta:
+      synckit:
+        optional: true
+
   update-browserslist-db@1.2.3:
     resolution: {integrity: sha512-Js0m9cx+qOgDxo0eMiFGEueWztz+d4+M3rGlmKPT+T4IS/jP4ylw3Nwpu6cpTTP8R1MAC1kF4VbdLt3ARf209w==}
     hasBin: true
@@ -9229,7 +9242,7 @@ snapshots:
       lightningcss: 1.32.0
       postcss-load-config: 6.0.1(jiti@2.6.1)(postcss@8.5.8)
       rolldown: 1.0.2
-      tsdown: 0.22.0(@tsdown/css@0.22.0)(typescript@5.9.3)
+      tsdown: 0.22.0(@tsdown/css@0.22.0)(typescript@5.9.3)(unrun@0.3.0(synckit@0.11.12))
     optionalDependencies:
       postcss: 8.5.8
     transitivePeerDependencies:
@@ -12904,7 +12917,7 @@ snapshots:
       minimist: 1.2.8
       strip-bom: 3.0.0
 
-  tsdown@0.22.0(@tsdown/css@0.22.0)(typescript@5.9.3):
+  tsdown@0.22.0(@tsdown/css@0.22.0)(typescript@5.9.3)(unrun@0.3.0(synckit@0.11.12)):
     dependencies:
       ansis: 4.3.0
       cac: 7.0.0
@@ -12924,6 +12937,7 @@ snapshots:
     optionalDependencies:
       '@tsdown/css': 0.22.0(jiti@2.6.1)(postcss@8.5.8)(tsdown@0.22.0)
       typescript: 5.9.3
+      unrun: 0.3.0(synckit@0.11.12)
     transitivePeerDependencies:
       - '@ts-macro/tsc'
       - '@typescript/native-preview'
@@ -13061,6 +13075,12 @@ snapshots:
       '@unrs/resolver-binding-win32-arm64-msvc': 1.11.1
       '@unrs/resolver-binding-win32-ia32-msvc': 1.11.1
       '@unrs/resolver-binding-win32-x64-msvc': 1.11.1
+
+  unrun@0.3.0(synckit@0.11.12):
+    dependencies:
+      rolldown: 1.0.2
+    optionalDependencies:
+      synckit: 0.11.12
 
   update-browserslist-db@1.2.3(browserslist@4.28.2):
     dependencies:

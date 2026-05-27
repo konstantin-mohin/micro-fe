@@ -62,7 +62,7 @@ Styling is managed through a centralized configuration strategy:
 
 ---
 
-## 3. UI Library & Design System (`packages/ui`)
+## 3. UI Library & Design System
 
 The `ui` package is the cornerstone of the project's visual identity, built as a high-performance, internal NPM library.
 
@@ -81,8 +81,8 @@ Styling is handled via a powerful combination of **Tailwind CSS**, **CVA**, and 
 Here is how we compose a component using the "Headless" + "Atomic Styling" approach:
 
 ```tsx
-import { Button as AriaButton, composeRenderProps } from 'react-aria-components';
-import { cva } from 'class-variance-authority';
+import { Button as AriaButton, ButtonProps as AriaButtonProps, composeRenderProps } from 'react-aria-components';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../lib/utils'; // Uses clsx + tailwind-merge
 
 const buttonVariants = cva(
@@ -98,6 +98,10 @@ const buttonVariants = cva(
     defaultVariants: { variant: 'primary', size: 'md' },
   }
 );
+
+export interface ButtonProps extends AriaButtonProps, VariantProps<typeof buttonVariants> {
+  className?: string;
+}
 
 export function Button({ variant, size, className, ...props }: ButtonProps) {
   return (

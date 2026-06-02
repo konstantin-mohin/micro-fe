@@ -25,12 +25,12 @@ test.describe('Big List Page', () => {
     // Scroll down
     await container.evaluate(el => el.scrollTop = 2000);
 
-    // Wait a bit for virtualization to update
-    await page.waitForTimeout(500);
+    // Check that items have changed - wait for the first item to NOT be the original first item
+    await expect(page.locator('h3').first()).not.toHaveText(itemTitles[0]);
 
-    // Check that items have changed
+    // Check that we still have items rendered
     const newItemTitles = await page.locator('h3').allTextContents();
-    expect(newItemTitles).not.toEqual(itemTitles);
+    expect(newItemTitles.length).toBeGreaterThan(0);
 
     // Verify "Back to Home" works
     await page.getByText('← Back to Home').click();

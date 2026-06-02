@@ -24,14 +24,17 @@ export function calculateVirtualization({
   itemHeight = ITEM_HEIGHT,
   buffer = BUFFER_ITEMS,
 }: VirtualizationParams): VirtualizationResult {
+  // Defensive guard: Ensure itemHeight is positive to avoid division by zero or negative indices
+  const safeItemHeight = Math.max(1, itemHeight);
+
   if (totalItems === 0) {
     return { startIndex: 0, endIndex: -1 };
   }
 
-  const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - buffer);
+  const startIndex = Math.max(0, Math.floor(scrollTop / safeItemHeight) - buffer);
   const endIndex = Math.min(
     totalItems - 1,
-    Math.floor((scrollTop + containerHeight) / itemHeight) + buffer
+    Math.floor((scrollTop + containerHeight) / safeItemHeight) + buffer
   );
 
   return { startIndex, endIndex };

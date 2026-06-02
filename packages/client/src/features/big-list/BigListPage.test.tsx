@@ -4,6 +4,7 @@ import { MemoryRouter, useLoaderData } from "react-router-dom";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import React from "react";
+import { Post } from "shared";
 
 /**
  * Strategy: Integration Testing (Jest + MSW): Testing the Consumer (BigListPage).
@@ -13,12 +14,21 @@ import React from "react";
 
 // Mock BigList (the "virtualized component" from the perspective of BigListPage)
 jest.mock("./BigList", () => ({
-  BigList: ({ itemsPromise }: { itemsPromise: Promise<any[]> }) => {
+  BigList: ({ itemsPromise }: { itemsPromise: Promise<Post[]> }) => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { useState, useEffect } = require("react");
-    const [items, setItems] = useState<any[] | null>(null);
+    const [items, setItems] = useState<Post[] | null>(null);
 
     useEffect(() => {
-      itemsPromise.then(setItems);
+      let active = true;
+      itemsPromise.then((data) => {
+        if (active) {
+          setItems(data);
+        }
+      });
+      return () => {
+        active = false;
+      };
     }, [itemsPromise]);
 
     if (!items) {
@@ -27,7 +37,7 @@ jest.mock("./BigList", () => ({
 
     return (
       <div data-testid="mock-list">
-        {items.map((item: any) => (
+        {items.map((item: Post) => (
           <div key={item.id} data-testid="list-item">
             {item.title}
           </div>
@@ -91,8 +101,8 @@ describe("BigListPage Integration (Consumer Testing)", () => {
   });
 
   test("handles loading state correctly with a pending promise", async () => {
-    let resolvePromise: (value: any) => void;
-    const itemsPromise = new Promise((resolve) => {
+    let resolvePromise: (value: Post[]) => void;
+    const itemsPromise = new Promise<Post[]>((resolve) => {
       resolvePromise = resolve;
     });
     

@@ -1,4 +1,4 @@
-import { calculateVirtualization, isScrollingFast, ITEM_HEIGHT, BUFFER_ITEMS } from "./virtualization";
+import { calculateVirtualization, isScrollingFast, BUFFER_ITEMS } from "./virtualization";
 
 describe("virtualization logic", () => {
   describe("calculateVirtualization", () => {

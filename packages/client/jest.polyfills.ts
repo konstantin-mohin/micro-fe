@@ -13,6 +13,7 @@ Object.defineProperties(globalThis, {
   WritableStream: { value: WritableStream, enumerable: true, configurable: true },
 })
 
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { MessageChannel, MessagePort, BroadcastChannel } = require('node:worker_threads')
 Object.defineProperties(globalThis, {
   MessageChannel: { value: MessageChannel, enumerable: true, configurable: true },

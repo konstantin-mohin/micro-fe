@@ -5,7 +5,7 @@ import React from 'react';
 
 test.use({ viewport: { width: 500, height: 600 } });
 
-test('should render visible items and handle scrolling', async ({ mount, page }) => {
+test('should render visible items and handle scrolling', async ({ mount }) => {
   const dummyItems = Array.from({ length: 100 }, (_, i) => ({
     id: i + 1,
     title: `Post ${i + 1}`,

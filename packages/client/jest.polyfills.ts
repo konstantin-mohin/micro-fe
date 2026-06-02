@@ -2,8 +2,10 @@
  * @note The order of these polyfills matters.
  */
 
-import { TextDecoder, TextEncoder } from 'node:util'
-import { ReadableStream, TransformStream, WritableStream } from 'node:stream/web'
+/* eslint-disable @typescript-eslint/no-require-imports */
+
+const { TextDecoder, TextEncoder } = require('node:util')
+const { ReadableStream, TransformStream, WritableStream } = require('node:stream/web')
 
 Object.defineProperties(globalThis, {
   TextDecoder: { value: TextDecoder, enumerable: true, configurable: true },
@@ -13,7 +15,6 @@ Object.defineProperties(globalThis, {
   WritableStream: { value: WritableStream, enumerable: true, configurable: true },
 })
 
-/* eslint-disable @typescript-eslint/no-require-imports */
 const { MessageChannel, MessagePort, BroadcastChannel } = require('node:worker_threads')
 Object.defineProperties(globalThis, {
   MessageChannel: { value: MessageChannel, enumerable: true, configurable: true },

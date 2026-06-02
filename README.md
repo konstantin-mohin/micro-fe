@@ -20,7 +20,7 @@ This project serves as a comprehensive practice ground for modern web engineerin
 - **Frontend:** React 19, TypeScript, Tailwind CSS 4
 - **Bundling:** Webpack 5 (Apps), tsdown (UI Library)
 - **Backend:** Node.js (Express)
-- **Testing:** Jest, React Testing Library, Playwright (E2E)
+- **Testing:** Jest, MSW (Integration), Playwright (E2E & Component Testing)
 - **Design System:** React Aria Components (Headless) + CVA
 
 ---
@@ -45,10 +45,15 @@ The project is structured as a **pnpm workspace**, managed by **Turborepo**. Thi
 The `client` application follows **Feature Sliced Design (FSD)** principles to ensure maintainability as the project grows:
 - **Features:** User-facing functionalities (e.g., `big-list`, `server-driven-ui`).
 - **Components:** Shared UI components specific to the application.
-- **Lib:** Application-specific utilities (e.g., `queryClient`, `theme`).
+- **Lib:** Application-specific utilities (e.g., `queryClient`, `theme`, `virtualization`).
 - **Routes:** Centralized routing configuration.
 
 ### Configuration Management
+
+#### Microfrontend Architecture & Dynamic Injection
+The `client` application acts as a host for microfrontends (e.g., `microfrontend-one`) using Webpack Module Federation. Currently, the remote entry injection is handled dynamically via `window.APP_MANIFEST`. This dynamic approach is particularly important for our **Docker deployments**, allowing us to inject the correct remote URLs at runtime without rebuilding the static assets.
+- **How it works:** The host fetches the manifest (often provided by the Docker container environment) and dynamically constructs a `<script>` tag to inject the remote entry based on the provided URL or falls back to local dev ports (e.g., `http://localhost:5174`).
+- **TODO [Architecture Improvement]:** Investigate and implement a more robust, declarative approach for remote injection. Potential solutions include using Webpack's native `promise` syntax combined with a dedicated remote loader utility, or leveraging modern module federation management tools (like `@module-federation/enhanced`). The goal is to avoid manual `<script>` tag manipulation and improve error boundaries, while maintaining the runtime flexibility required by our Docker infrastructure.
 
 #### TypeScript Inheritance
 We use a **base-extension model** for TypeScript configuration:
@@ -125,16 +130,33 @@ We use **Storybook** for isolated development and documentation of the UI librar
 
 ## 4. Testing Strategy
 
-Quality is ensured through a multi-layered testing strategy covering everything from individual utilities to full end-to-end user flows.
+The project employs a comprehensive, multi-layered testing strategy designed to verify behavior at every level of the application stack.
 
-### Unit & Integration Tests
-We use **Jest** and **React Testing Library** for unit and integration testing. Tests are colocated with the code they verify.
-- **Run All Tests:** `pnpm turbo run test`
-- **Package Specific:** `pnpm --filter ui test`
+### 4.1 Unit Testing (Isolated Logic)
+Focuses on verifying pure functions and complex business logic in isolation. We extract heavy logic (e.g., virtualization math) into pure utilities to ensure high precision and testability.
+- **Tools:** Jest
+- **Example:** `packages/client/src/lib/virtualization.test.ts`
 
-### End-to-End (E2E) Tests
-Comprehensive E2E tests are located in `packages/e2e`, utilizing **Playwright**. These tests verify that the frontend, microfrontends, and backend work together correctly in a production-like environment.
-- **Run E2E Tests:** `pnpm turbo run e2e`
+### 4.2 Component Testing (Real Browser Isolation)
+Verifies complex UI components in a real browser environment but in isolation from the rest of the application. This is ideal for components with complex CSS, animations, or DOM-heavy logic like virtualization.
+- **Tools:** Playwright Component Testing (CT)
+- **Example:** `packages/client/src/components/VirtualizedList.spec.tsx`
+
+### 4.3 Integration Testing (Consumer Testing)
+Tests the interaction between pages and their data sources. We use a "Consumer Testing" strategy where the page is tested with its real data fetching logic (intercepted by MSW) while mocking downstream UI components to focus on data flow and state management.
+- **Tools:** Jest, React Testing Library, MSW (Mock Service Worker)
+- **Example:** `packages/client/src/features/big-list/BigListPage.test.tsx`
+
+### 4.4 End-to-End (E2E) Testing (User Journey)
+Validates the full user journey across multiple applications and services. These tests run against a production-like environment.
+- **Tools:** Playwright
+- **Example:** `packages/e2e/tests/big-list.spec.ts`
+
+### Running Tests
+- **All Tests (Turbo):** `pnpm turbo run test`
+- **Unit & Integration:** `cd packages/client && npm test`
+- **Component Tests:** `cd packages/client && npx playwright test -c playwright-ct.config.ts`
+- **E2E Tests:** `pnpm turbo run e2e`
 
 ---
 

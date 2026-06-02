@@ -19,7 +19,7 @@ export function Sidebar({
         { id: '4-3', label: 'Transitions', href: '/server-driven-ui/transitions' }
       ]
     },
-    { id: '5', label: 'Design System', href: '/design-system/', target: '_blank', isExternal: true },
+    { id: '6', label: 'Design System', href: '/design-system/', target: '_blank', isExternal: true },
   ],
   className
 }: SidebarProps) {

@@ -32,11 +32,12 @@ const config: StorybookConfig = {
     if (config.module?.rules) {
       config.module.rules = config.module.rules.filter(rule => {
         if (!rule || typeof rule !== 'object' || Array.isArray(rule)) return true;
-        const test = (rule as { test?: any }).test;
+        const test = (rule as { test?: unknown }).test;
         if (!test) return true;
         
+        const testString = String(test);
         // Robust check for CSS-related rules
-        return !(/\.css$/.test(test.toString()) || test.toString().includes('css'));
+        return !(/\.css$/.test(testString) || testString.includes('css'));
       });
 
       // Add our custom CSS rule that matches your UI package's webpack config

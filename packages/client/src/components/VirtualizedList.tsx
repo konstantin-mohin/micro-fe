@@ -1,9 +1,11 @@
 import { useRef, useState, useLayoutEffect, useMemo, memo, useEffect } from "react";
 import { debounce } from "../lib/utils";
 import { useBigListStore } from "../features/big-list/store";
-
-const ITEM_HEIGHT = 120; // Fixed height for each item in pixels
-const BUFFER_ITEMS = 5; // Extra items to render above and below the visible area
+import { 
+  calculateVirtualization, 
+  isScrollingFast as checkScrollingFast,
+  ITEM_HEIGHT 
+} from "../lib/virtualization";
 
 interface VirtualizedListItemProps {
   id: number;
@@ -102,11 +104,14 @@ export default function VirtualizedList() {
     const currentScrollTop = e.currentTarget.scrollTop;
     const currentTime = performance.now();
 
-    const timeDelta = currentTime - scrollTracker.current.time;
-    const distanceDelta = Math.abs(currentScrollTop - scrollTracker.current.top);
-    const velocity = timeDelta > 0 ? distanceDelta / timeDelta : 0;
+    const isFast = checkScrollingFast(
+      currentScrollTop,
+      scrollTracker.current.top,
+      currentTime,
+      scrollTracker.current.time
+    );
 
-    if (velocity > 40) {
+    if (isFast) {
       setIsScrollingFast(true);
     }
 
@@ -121,11 +126,11 @@ export default function VirtualizedList() {
     setScrollTop(currentScrollTop);
   };
 
-  const startIndex = Math.max(0, Math.floor(scrollTop / ITEM_HEIGHT) - BUFFER_ITEMS);
-  const endIndex = Math.min(
-    itemIds.length - 1,
-    Math.floor((scrollTop + containerHeight) / ITEM_HEIGHT) + BUFFER_ITEMS
-  );
+  const { startIndex, endIndex } = calculateVirtualization({
+    scrollTop,
+    containerHeight,
+    totalItems: itemIds.length
+  });
 
   const visibleIds = itemIds.slice(startIndex, endIndex + 1);
   const totalHeight = itemIds.length * ITEM_HEIGHT;
@@ -160,3 +165,4 @@ export default function VirtualizedList() {
     </div>
   );
 }
+

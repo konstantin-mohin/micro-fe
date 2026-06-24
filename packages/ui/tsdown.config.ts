@@ -6,7 +6,7 @@ export default defineConfig({
   dts: {
     build: true,
   },
-  clean: true,
+  clean: false,
   minify: true,
   deps: {
     neverBundle: ['react', 'react-dom', 'react-aria-components', 'class-variance-authority', 'clsx', 'tailwind-merge'],

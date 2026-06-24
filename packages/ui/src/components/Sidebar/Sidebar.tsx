@@ -24,7 +24,7 @@ export function Sidebar({
   className
 }: SidebarProps) {
   return (
-    <aside className={`w-64 bg-gray-50 dark:bg-gray-800 h-screen p-4 border-r border-gray-200 dark:border-gray-700 ${className || ''}`}>
+    <aside className={`w-64 bg-gray-50 dark:bg-gray-800  p-4 border-r border-gray-200 dark:border-gray-700 ${className || ''}`}>
       <SidebarMenu items={items} />
     </aside>
   );

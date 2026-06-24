@@ -13,6 +13,11 @@ let postsCache: Post[] = [];
 let clients: Response[] = [];
 let initializationPromise: Promise<void> | null = null;
 
+// Mock database for Optimistic Updates Demo
+const demoItems = [
+  { id: 1, title: 'Optimistic Demo Item', likes: 0 },
+];
+
 async function initializePosts() {
   if (postsCache.length > 0) return;
   if (initializationPromise) return initializationPromise;
@@ -158,6 +163,85 @@ app.get('/api/data', (_req: Request, res: Response) => {
 app.get('/api/random-number', (_req: Request, res: Response) => {
   const randomNumber = Math.floor(Math.random() * 1000) + 1;
   res.json({ number: randomNumber });
+});
+
+// --- Dependent Queries Demo Endpoints ---
+const mockUser = { id: 1, name: 'Gemini User' };
+const mockProjects = [
+  { id: 101, userId: 1, title: 'Project Alpha' },
+  { id: 102, userId: 1, title: 'Project Beta' },
+];
+const mockTasks = [
+  { id: 1001, projectId: 101, title: 'Task 1.1' },
+  { id: 1002, projectId: 101, title: 'Task 1.2' },
+  { id: 2001, projectId: 102, title: 'Task 2.1' },
+];
+
+app.get('/api/user', async (_req, res) => {
+  await new Promise(resolve => setTimeout(resolve, 800));
+  res.json(mockUser);
+});
+
+app.get('/api/projects', async (req, res) => {
+  const userId = parseInt(req.query.userId as string);
+  await new Promise(resolve => setTimeout(resolve, 800));
+  if (userId === mockUser.id) {
+    res.json(mockProjects);
+  } else {
+    res.json([]);
+  }
+});
+
+app.get('/api/tasks', async (req, res) => {
+  const projectId = req.query.projectId ? parseInt(req.query.projectId as string) : null;
+  const userId = req.query.userId ? parseInt(req.query.userId as string) : null;
+  
+  await new Promise(resolve => setTimeout(resolve, 800));
+
+  if (projectId) {
+    res.json(mockTasks.filter(t => t.projectId === projectId));
+  } else if (userId === mockUser.id) {
+    // Optimized path: fetch all tasks for user's projects
+    res.json(mockTasks);
+  } else {
+    res.json([]);
+  }
+});
+
+app.get('/api/live-stats', (_req, res) => {
+  res.json({
+    activeUsers: Math.floor(Math.random() * 500) + 1000,
+    requestsPerSecond: Math.floor(Math.random() * 50) + 200,
+    serverLoad: (Math.random() * 40 + 10).toFixed(1) + '%',
+    timestamp: new Date().toISOString()
+  });
+});
+// ----------------------------------------
+
+app.get('/api/demo-items', (_req: Request, res: Response) => {
+  res.json(demoItems);
+});
+
+app.post('/api/demo-items/:id/like', async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const item = demoItems.find(i => i.id === id);
+
+  if (!item) {
+    return res.status(404).json({ error: 'Item not found' });
+  }
+
+  // Simulate network latency (2 seconds)
+  await new Promise(resolve => setTimeout(resolve, 2000));
+
+  // Simulate random failure (30% chance)
+  if (Math.random() < 0.3) {
+    console.log(`[Demo] Simulating failure for item ${id}`);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+
+  item.likes += 1;
+  console.log(`[Demo] Item ${id} liked. Total likes: ${item.likes}`);
+  res.json(item);
 });
 
 app.listen(port, () => {

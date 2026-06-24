@@ -17,7 +17,7 @@ This project serves as a comprehensive practice ground for modern web engineerin
 
 ### Key Technologies
 - **Monorepo Management:** Turborepo + pnpm Workspaces
-- **Frontend:** React 19, TypeScript, Tailwind CSS 4
+- **Frontend:** React 19, TypeScript, Tailwind CSS 4, React Query
 - **Bundling:** Webpack 5 (Apps), tsdown (UI Library)
 - **Backend:** Node.js (Express)
 - **Testing:** Jest, MSW (Integration), Playwright (E2E & Component Testing)
@@ -43,7 +43,7 @@ The project is structured as a **pnpm workspace**, managed by **Turborepo**. Thi
 
 ### Application Architecture (Feature Sliced Design)
 The `client` application follows **Feature Sliced Design (FSD)** principles to ensure maintainability as the project grows:
-- **Features:** User-facing functionalities (e.g., `big-list`, `server-driven-ui`).
+- **Features:** User-facing functionalities (e.g., `big-list`, `server-driven-ui`, `react-query`).
 - **Components:** Shared UI components specific to the application.
 - **Lib:** Application-specific utilities (e.g., `queryClient`, `theme`, `virtualization`).
 - **Routes:** Centralized routing configuration.

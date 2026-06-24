@@ -1,7 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { DependentQueriesDemo } from './DependentQueriesDemo';
-import { TestStoreWrapper } from '../../components/TestStoreWrapper';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const mockFetch = jest.fn(() => Promise.resolve({ ok: true, json: () => Promise.resolve([]) }));
+global.fetch = mockFetch as jest.Mock;
 
 const queryClient = new QueryClient({
   defaultOptions: {

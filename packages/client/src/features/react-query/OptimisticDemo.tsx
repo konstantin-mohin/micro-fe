@@ -29,9 +29,9 @@ export function OptimisticDemo() {
       return response.json();
     },
     // When mutate is called:
-    onMutate: (id) => {
+    onMutate: async (id) => {
       // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
-      queryClient.cancelQueries({ queryKey: ['demoItems'] });
+      await queryClient.cancelQueries({ queryKey: ['demoItems'] });
 
       // Snapshot the previous value
       const previousItems = queryClient.getQueryData<DemoItem[]>(['demoItems']);

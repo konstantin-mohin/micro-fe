@@ -27,16 +27,15 @@ export function PollingDemo() {
   });
 
   return (
-    <div 
-      ref={containerRef as React.RefObject<HTMLDivElement>} 
+    <div
+      ref={containerRef as React.RefObject<HTMLDivElement>}
       className="mt-8 p-6 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 shadow-sm transition-colors max-w-md mx-auto overflow-hidden relative"
     >
       {/* Visibility Status Badge */}
-      <div className={`absolute top-4 right-4 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest transition-colors ${
-        isVisible 
-          ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' 
-          : 'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
-      }`}>
+      <div className={`absolute top-4 right-4 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest transition-colors ${isVisible
+        ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+        : 'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
+        }`}>
         {isVisible ? '● Visible' : '○ Off-screen'}
       </div>
 
@@ -46,25 +45,25 @@ export function PollingDemo() {
       </p>
 
       <div className="grid grid-cols-2 gap-4">
-        <StatCard 
-          label="Active Users" 
-          value={data?.activeUsers.toLocaleString()} 
-          isUpdating={isFetching} 
+        <StatCard
+          label="Active Users"
+          value={data?.activeUsers.toLocaleString()}
+          isUpdating={isFetching}
         />
-        <StatCard 
-          label="Req / Second" 
-          value={data?.requestsPerSecond.toString()} 
-          isUpdating={isFetching} 
+        <StatCard
+          label="Req / Second"
+          value={data?.requestsPerSecond.toString()}
+          isUpdating={isFetching}
         />
-        <StatCard 
-          label="Server Load" 
-          value={data?.serverLoad} 
-          isUpdating={isFetching} 
+        <StatCard
+          label="Server Load"
+          value={data?.serverLoad}
+          isUpdating={isFetching}
         />
-        <StatCard 
-          label="Last Update" 
-          value={data ? new Date(data.timestamp).toLocaleTimeString() : '--:--:--'} 
-          isUpdating={isFetching} 
+        <StatCard
+          label="Last Update"
+          value={data ? new Date(data.timestamp).toLocaleTimeString() : '--:--:--'}
+          isUpdating={isFetching}
         />
       </div>
 

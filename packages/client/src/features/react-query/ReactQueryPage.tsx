@@ -15,6 +15,7 @@ export function ReactQueryPage() {
         <div className="space-y-8">
           <OptimisticDemo />
           <PollingDemo />
+          <DependentQueriesDemo />
         </div>
       </div>
 

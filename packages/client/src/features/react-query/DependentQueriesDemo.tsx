@@ -79,7 +79,7 @@ export function DependentQueriesDemo() {
         <Button
           variant={mode === 'waterfall' ? 'primary' : 'secondary'}
           size="sm"
-          onClick={() => { reset(); setTimeout(() => setMode('waterfall'), 10); }}
+          onClick={() => { reset(); setMode('waterfall'); }}
           isDisabled={isWaterfallLoading || isOptimizedLoading}
         >
           Waterfall
@@ -87,7 +87,7 @@ export function DependentQueriesDemo() {
         <Button
           variant={mode === 'optimized' ? 'primary' : 'secondary'}
           size="sm"
-          onClick={() => { reset(); setTimeout(() => setMode('optimized'), 10); }}
+          onClick={() => { reset(); setMode('optimized'); }}
           isDisabled={isWaterfallLoading || isOptimizedLoading}
         >
           Optimized

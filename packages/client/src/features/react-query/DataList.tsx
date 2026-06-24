@@ -20,7 +20,7 @@ export function DataList() {
     },
   });
 
-  if (isLoading) return <div className="mt-4 animate-pulse text-gray-500">Loading example data...</div>;
+  if (isLoading) return <div className="h-[600px] mt-4 animate-pulse text-gray-500">Loading example data...</div>;
   if (error) return <div className="mt-4 text-red-500">Error loading data</div>;
 
   return (

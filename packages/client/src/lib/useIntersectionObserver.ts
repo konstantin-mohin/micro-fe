@@ -8,21 +8,24 @@ export function useIntersectionObserver(
   options: Options = {}
 ): [React.RefObject<HTMLElement | null>, boolean] {
   const { threshold = 0.1, root = null, rootMargin = '0px', freezeOnceVisible = false } = options;
-  
+
   const [isIntersecting, setIntersecting] = useState(false);
   const ref = useRef<HTMLElement | null>(null);
+  const frozenRef = useRef(false);
 
   useEffect(() => {
     const element = ref.current;
-    if (!element || (freezeOnceVisible && isIntersecting)) return;
+    if (!element || frozenRef.current) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIntersecting(entry.isIntersecting);
-        
+        const isElementIntersecting = entry.isIntersecting;
+        setIntersecting(isElementIntersecting);
+
         // If we only want to trigger once, disconnect after first intersection
-        if (entry.isIntersecting && freezeOnceVisible) {
-          observer.unobserve(element);
+        if (isElementIntersecting && freezeOnceVisible) {
+          frozenRef.current = true;
+          observer.disconnect();
         }
       },
       { threshold, root, rootMargin }
@@ -33,7 +36,7 @@ export function useIntersectionObserver(
     return () => {
       observer.disconnect();
     };
-  }, [threshold, root, rootMargin, freezeOnceVisible, isIntersecting]);
+  }, [threshold, root, rootMargin, freezeOnceVisible]);
 
   return [ref, isIntersecting];
 }
